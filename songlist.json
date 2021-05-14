@@ -1,0 +1,80 @@
+[
+   {
+	  "trackid": 1,
+      "title":"Dont Start Now",
+      "artist":"Dua Lipa",
+      "bpm":"125",
+      "camelot":"1B",
+      "key":"F#m"
+   },{
+	  "trackid": 2,
+      "title":"Fireworks",
+      "artist":"Purple Disco Machine",
+      "bpm":"120",
+      "camelot":"3A",
+      "key":"Ab"
+   },{
+	  "trackid": 3,
+      "title":"Technologic",
+      "artist":"Daft Punk",
+      "bpm":"120",
+      "camelot":"3A",
+      "key":"Ab"
+   },{
+	  "trackid": 4,
+      "title":"Midas Touch",
+      "artist":"Midnight Star",
+      "bpm":"120",
+      "camelot":"3A",
+      "key":"Ab"
+   },{
+	  "trackid": 5,
+      "title":"Intoxicated",
+      "artist":"Me & My Toothbrush",
+      "bpm":"120",
+      "camelot":"3A",
+      "key":"Ab"
+   },{
+	  "trackid": 6,
+      "title":"Disco Body Parts (feat. AWOLNATION)",
+      "artist":"Yung Bae",
+      "bpm":"120",
+      "camelot":"3A",
+      "key":"Ab"
+   },{
+	  "trackid": 7,
+      "title":"Daddy Cool",
+      "artist":"Boney M.",
+      "bpm":"120",
+      "camelot":"3A",
+      "key":"Ab"
+   },{
+	  "trackid": 8,
+      "title":"DNCE",
+      "artist":"DNCE",
+      "bpm":"120",
+      "camelot":"3A",
+      "key":"Ab"
+   },{
+	  "trackid": 9,
+      "title":"1999 (Michael Calfan Remix)",
+      "artist":"Charli XCX, Troye Sivan",
+      "bpm":"120",
+      "camelot":"3A",
+      "key":"Ab"
+   },{
+	  "trackid": 10,
+      "title":"Billie Jean",
+      "artist":"Michael Jackson",
+      "bpm":"120",
+      "camelot":"3A",
+      "key":"Ab"
+   },{
+	  "trackid": 11,
+      "title":"LOVE ME RIGHT",
+      "artist":"EXO",
+      "bpm":"120",
+      "camelot":"3A",
+      "key":"Ab"
+   }
+]
