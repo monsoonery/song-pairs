@@ -225,7 +225,7 @@ function showPairList(x) {
 			document.getElementById("compatible").appendChild(tempPar);
 		}
 	}
-	document.getElementById('theFollowing').innerHTML = "The following songs are compatible with " + getArtistAndTitleById(x);
+	document.getElementById('theFollowing').innerHTML = "The following songs are compatible with " + getArtistAndTitleById(x) + ": ";
 }
 
 //-------------------------- END compatible songs display functions -------------------------------	
