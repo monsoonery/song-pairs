@@ -1,7 +1,7 @@
 [
    {
 	  "trackid": 1,
-      "title":"Dont Start Now",
+      "title":"Don't Start Now",
       "artist":"Dua Lipa",
       "bpm":"125",
       "camelot":"1B",
@@ -73,6 +73,13 @@
 	  "trackid": 11,
       "title":"LOVE ME RIGHT",
       "artist":"EXO",
+      "bpm":"120",
+      "camelot":"3A",
+      "key":"Ab"
+   },{
+	  "trackid": 12,
+      "title":"Man's Not Hot",
+      "artist":"Big Shaq",
       "bpm":"120",
       "camelot":"3A",
       "key":"Ab"

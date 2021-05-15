@@ -1,14 +1,15 @@
 //var myObj = JSON.parse("/songlist.json");
 //document.getElementById('songlisty').innerHTML = myObj[0].title;
 //let songs = ['Dua Lipa', 'Banana', "Coolio", "DaBaby", "Diplo", "Briggs"];
-//var i = 0;
-//let songs = []; 		//artist + title, for search results
-//var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
+//localStorage.setItem('pairlist', JSON.stringify(pairlist));
+//document.getElementById("s1").oninput = handleInput; 
+//document.getElementById("s2").oninput = handleInput; 
+//autocomplete(document.getElementById("compatible"));
+//autocomplete(document.getElementById("searchField"));
 
 var songlist; 													//json
-let pairs = JSON.parse(localStorage.getItem('pairList'));		//[[x.y],[x,y], ...] trackid pairs
+let pairlist = JSON.parse(localStorage.getItem('pairlist'));	//[[x.y],[x,y], ...] trackid pairs
 var richting = 1; 												//one-way or two-way compatible
-//localStorage.setItem('pairList', JSON.stringify(pairs));
 var song1;
 var song2;
 
@@ -22,34 +23,60 @@ function init() {
 	}
 	document.getElementById("jsonimport").addEventListener("change", loadJson);
 	document.getElementById("searchField").oninput = handleInput; 
-	//document.getElementById("s1").oninput = handleInput; 
-	//document.getElementById("s2").oninput = handleInput; 
+
 	autocomplete(document.getElementById("s1"));
 	autocomplete(document.getElementById("s2"));
-	//autocomplete(document.getElementById("compatible"));
-	//autocomplete(document.getElementById("searchField"));
+
+	console.log('pairlist local: ' + localStorage.getItem('pairlist'));
 	console.log("init complete");
 }
 
-//-------------------------- json import functions --------------------------
+//import songlist from github
+var request = new XMLHttpRequest();
+request.open("GET", "https://monsoonery.github.io/song-pairs/songlist.json", true);
+request.send(null);
+request.onreadystatechange = function() {
+  if (request.readyState === 4 && request.status === 200 ) {
+    songlist = JSON.parse(request.responseText);
+	displaySongs(searchSongs(""));
+	document.getElementById('notifier').innerHTML = "JSON loaded from server successfully!";
+	console.log('songlist server: ' + songlist);
+  } else {
+	document.getElementById('notifier').innerHTML = "Failed to upload JSON";
+  }
+}
+
+//import pairlist from github
+/*var request = new XMLHttpRequest();
+request.open("GET", "https://monsoonery.github.io/song-pairlist/pairlist.json", true);
+request.send(null);
+request.onreadystatechange = function() {
+  if ( request.readyState === 4 && request.status === 200 ) {
+    songlist = JSON.parse(request.responseText);
+	displaySongs(searchSongs(""));
+	document.getElementById('notifier').innerHTML = "JSON loaded from server successfully!";
+	console.log(pairlist);
+	console.log('pairlist server: ' + pairlist);
+  } else {
+	document.getElementById('notifier').innerHTML = "Failed to upload JSON";
+  }
+}*/
+
+//-------------------------- local json import functions --------------------------
 function loadJson() {
 	const file = this.files[0];
     let fr = new FileReader();
     fr.onload = function() {
         songlist = JSON.parse(fr.result);
-		document.getElementById('notifier').innerHTML = "JSON loaded successfully!";
-		//loadSongsInArray();
-		
+		displaySongs(searchSongs(""));
+		document.getElementById('notifier').innerHTML = "Local JSON loaded successfully!";
+		console.log(songlist);
 	};
 	console.log("json loaded");
 	fr.readAsText(file);
 }
-/*function loadSongsInArray() {
-	for (j = 0; j < songlist.length; j++) {
-		songList.push(songlist[j].title);
-	}
-}*/
-//-------------------------- END json import functions --------------------------
+
+//-------------------------- END local json import functions --------------------------
 
 
 //-------------------------- new pair entries functions --------------------------
@@ -88,13 +115,13 @@ function submitSongs() {
 			//save new pair using track ids
 			if (richting == 1) {
 				//one-way compatible, write only once
-				pairs.push([id1, id2]);	
+				pairlist.push([id1, id2]);	
 				writePair(song1, song2);
 			} else if (richting == 2){
 				//two-way compatible, write twice
-				pairs.push([id1, id2]);	
+				pairlist.push([id1, id2]);	
 				writePair(song1, song2);
-				pairs.push([id2, id1]);	
+				pairlist.push([id2, id1]);	
 				writePair(song2, song1);
 			}
 		}
@@ -114,13 +141,13 @@ function submitSongs() {
 }
 
 function writePair(x, y) {
-	var i = pairs.length - 1;
+	var i = pairlist.length - 1;
 	//for reference
 	console.log(i);
-	console.log(pairs[i]);
+	console.log(pairlist[i]);
 	//add track ids to recent additions
 	var tempPar = document.createElement("p");
-    var tempText = document.createTextNode(pairs[i]);
+    var tempText = document.createTextNode(pairlist[i]);
     document.getElementById("showcase").appendChild(tempPar);
     tempPar.appendChild(tempText);
 	//add song names to recent additions
@@ -128,7 +155,7 @@ function writePair(x, y) {
     var text = document.createTextNode(x + " + " + y);
     par.appendChild(text);
     document.getElementById("showcase").appendChild(par);
-	localStorage.setItem('pairList', JSON.stringify(pairs));
+	localStorage.setItem('pairlist', JSON.stringify(pairlist));
 }
         
 function cycleButtonIcon() {
@@ -189,9 +216,9 @@ var getArtistAndTitleById = id => getArtistAndTitle(findSong(id));
 
 function showPairList(x) {
 	clearDiv("compatible");
-	for (j = 0; j < pairs.length; j++) {
-		if (pairs[j][0] == x) {
-			var h = getArtistAndTitleById(pairs[j][1]);
+	for (j = 0; j < pairlist.length; j++) {
+		if (pairlist[j][0] == x) {
+			var h = getArtistAndTitleById(pairlist[j][1]);
 			var tempPar = document.createElement("p");
 			var tempText = document.createTextNode(h);
 			tempPar.appendChild(tempText);
@@ -237,10 +264,11 @@ function autocomplete(inp, arr) {
 		b.innerHTML += results[i].substr(index + len);
         /*insert a input field that will hold the current array item's value:*/
         b.innerHTML += "<input type='hidden' value='" + results[i] + "'>";
+		let name = results[i];
         /*execute a function when someone clicks on the item value (DIV element):*/
         b.addEventListener("click", function(e) {
             /*insert the value for the autocomplete text field:*/
-            inp.value = this.getElementsByTagName("input")[0].value;
+            inp.value = name;
             /*close the list of autocompleted values,
             (or any other open lists of autocompleted values:*/
             closeAllLists();
@@ -306,16 +334,16 @@ function autocomplete(inp, arr) {
 }
 //-------------------------- END yoinked autocomplete functions -------------------------------
 
-//-------------------------- clear pairs list functions -------------------------------
+//-------------------------- clear pairlist functions -------------------------------
 function clearPairList() {
-	if (confirm('Are you sure you want to clear the pairs list?')) {
-		localStorage.setItem('pairList', JSON.stringify([]));
+	if (confirm('Are you sure you want to clear the pairlist?')) {
+		localStorage.setItem('pairlist', JSON.stringify([]));
 		console.log('Pair list clearing complete.');
 	} else {
 		console.log('Pair list clearing cancelled.');
 	}
 }
-//-------------------------- END clear pairs list functions -------------------------------
+//-------------------------- END clear pairlist functions -------------------------------
 
 //-------------------------- modal box functions -------------------------------
 function openNewSongPopup() {
@@ -327,6 +355,25 @@ function closeNewSongPopup() {
 }
 function saveNewSong() {
 	console.log("nice");
+	var title = document.getElementById("modalTitle").value;
+	var artist = document.getElementById("modalArtist").value;
+	var bpm = document.getElementById("modalBPM").value;
+	var camelot = document.getElementById("modalCamelot").value;
+	var key = document.getElementById("modalKey").value;
+	
+	var id = songlist.length + 1;
+	var tempObj = {"trackid": id,"title":title, "artist":artist, "bpm": bpm, "camelot":camelot, "key":key};
+	console.log(tempObj);
+	songlist.push(tempObj);
+	console.log(songlist);
+	
+	document.getElementById('addNewSongModal').style.display = "none";
+	
+	document.getElementById("modalTitle").innerHTML = "";
+	document.getElementById("modalArtist").innerHTML = "";
+	document.getElementById("modalBPM").innerHTML = "";
+	document.getElementById("modalCamelot").innerHTML = "";
+	document.getElementById("modalKey").innerHTML = "";
 }
 
 //-------------------------- END modal box functions -------------------------------
@@ -334,3 +381,42 @@ function saveNewSong() {
 
 console.log("full js loaded");
 
+//-------------------------- exporting json functions -------------------------------
+function exportPairList() {
+	const filename = 'pairlist.json';
+	jsonStr = JSON.stringify(pairlist);
+	let element = document.createElement('a');
+	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
+	element.setAttribute('download', filename);
+	element.style.display = 'none';
+	document.body.appendChild(element);
+	element.click();
+	document.body.removeChild(element);
+}
+
+function exportList(name, arr) {
+	const filename = 'songlist.json';
+	jsonStr = JSON.stringify(songlist);
+	
+	let element = document.createElement('a');
+	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
+	element.setAttribute('download', filename);
+	element.style.display = 'none';
+	document.body.appendChild(element);
+	element.click();
+	document.body.removeChild(element);
+}
+//-------------------------- END exporting json functions -------------------------------
+
+function exportList(name, arr) {
+	const filename = name;
+	jsonStr = JSON.stringify(arr);
+	
+	let element = document.createElement('a');
+	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
+	element.setAttribute('download', filename);
+	element.style.display = 'none';
+	document.body.appendChild(element);
+	element.click();
+	document.body.removeChild(element);
+}
