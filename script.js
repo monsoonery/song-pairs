@@ -17,12 +17,9 @@ var song2;
 
 
 function init() {
+	goTo('collectionPage');
 	// When the user clicks anywhere outside of the modal, close it
-	window.onclick = function(event) {
-		if (event.target == document.getElementById('addNewSongModal')) {
-		document.getElementById('addNewSongModal').style.display = "none";
-		}
-	}
+
 	document.getElementById("jsonimport").addEventListener("change", loadJson);
 	document.getElementById("searchField").oninput = handleInput; 
 
@@ -30,6 +27,12 @@ function init() {
 	autocomplete(document.getElementById("s2"));
 
 	//console.log('pairlist local: ' + localStorage.getItem('pairlist'));
+	window.onclick = function(event) {
+		if (event.target == document.getElementById('addNewSongModal')) {
+		document.getElementById('addNewSongModal').style.display = "none";
+		}
+	}
+	
 	console.log("init complete");
 }
 
@@ -395,15 +398,18 @@ function exportList(name, arr) {
 //-------------------------- END exporting json functions -------------------------------
 
 //-------------------------- switching pages functions -------------------------------
-function goToCollection() {
-	document.getElementById('collectionPage').classList.remove("hidden");
-	document.getElementById('pairPage').classList.add("hidden");
-}
-function goToPairs() {
-	document.getElementById('collectionPage').classList.add("hidden");
-	document.getElementById('pairPage').classList.remove("hidden");
+function goTo(p) {
+	[].forEach.call(document.querySelectorAll("#pageContainer>div"), el => el.classList.add("hidden"));
+	document.getElementById(p).classList.remove("hidden");
 }
 //-------------------------- END switching pages functions -------------------------------
+
+var sortByVal;
+
+function test (){
+	sortByVal = document.getElementById('sortSearchResultsBySelect').value;
+	console.log(sortByVal);
+}
 
 console.log("full js loaded");
 
