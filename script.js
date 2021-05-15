@@ -7,11 +7,13 @@
 //autocomplete(document.getElementById("compatible"));
 //autocomplete(document.getElementById("searchField"));
 
-var songlist; 													//json
-let pairlist = JSON.parse(localStorage.getItem('pairlist'));	//[[x.y],[x,y], ...] trackid pairs
+var songlist; 
+var pairlist;													//json
+pairlist = JSON.parse(localStorage.getItem('pairlist'));	//[[x.y],[x,y], ...] trackid pairs
 var richting = 1; 												//one-way or two-way compatible
 var song1;
 var song2;
+
 
 
 function init() {
@@ -393,7 +395,7 @@ function exportPairList() {
 	document.body.removeChild(element);
 }
 
-function exportList(name, arr) {
+/*function exportList(name, arr) {
 	const filename = 'songlist.json';
 	jsonStr = JSON.stringify(songlist);
 	
@@ -404,7 +406,7 @@ function exportList(name, arr) {
 	document.body.appendChild(element);
 	element.click();
 	document.body.removeChild(element);
-}
+}*/
 //-------------------------- END exporting json functions -------------------------------
 
 function exportList(name, arr) {
