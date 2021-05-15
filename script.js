@@ -39,26 +39,25 @@ request.onreadystatechange = function() {
   if (request.readyState === 4 && request.status === 200 ) {
     songlist = JSON.parse(request.responseText);
 	displaySongs(searchSongs(""));
-	document.getElementById('notifier').innerHTML = "JSON loaded from server successfully!";
+	document.getElementById('notifier').innerHTML = "songlist.json loaded from server successfully!";
 	console.log('songlist server: ' + songlist);
   } else {
-	document.getElementById('notifier').innerHTML = "Failed to upload JSON";
+	document.getElementById('notifier').innerHTML = "Failed to upload songlist.json";
   }
 }
 
 //import pairlist from github
 /*var request = new XMLHttpRequest();
-request.open("GET", "https://monsoonery.github.io/song-pairlist/pairlist.json", true);
+request.open("GET", "https://monsoonery.github.io/song-pairs/pairlist.json", true);
 request.send(null);
 request.onreadystatechange = function() {
   if ( request.readyState === 4 && request.status === 200 ) {
     songlist = JSON.parse(request.responseText);
 	displaySongs(searchSongs(""));
-	document.getElementById('notifier').innerHTML = "JSON loaded from server successfully!";
-	console.log(pairlist);
+	document.getElementById('notifier').innerHTML = "pairlist.json loaded from server successfully!";
 	console.log('pairlist server: ' + pairlist);
   } else {
-	document.getElementById('notifier').innerHTML = "Failed to upload JSON";
+	document.getElementById('notifier').innerHTML = "Failed to upload pairlist.json";
   }
 }*/
 
