@@ -29,7 +29,7 @@ function init() {
 	autocomplete(document.getElementById("s1"));
 	autocomplete(document.getElementById("s2"));
 
-	console.log('pairlist local: ' + localStorage.getItem('pairlist'));
+	//console.log('pairlist local: ' + localStorage.getItem('pairlist'));
 	console.log("init complete");
 }
 
