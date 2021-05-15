@@ -177,6 +177,10 @@ button:hover {
   color: black;
 }
 
+.hidden { 
+	display: none; 
+}
+
 
 /* ---- crap ---- */
 

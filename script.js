@@ -379,35 +379,7 @@ function saveNewSong() {
 //-------------------------- END modal box functions -------------------------------
 
 
-console.log("full js loaded");
-
 //-------------------------- exporting json functions -------------------------------
-function exportPairList() {
-	const filename = 'pairlist.json';
-	jsonStr = JSON.stringify(pairlist);
-	let element = document.createElement('a');
-	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
-	element.setAttribute('download', filename);
-	element.style.display = 'none';
-	document.body.appendChild(element);
-	element.click();
-	document.body.removeChild(element);
-}
-
-/*function exportList(name, arr) {
-	const filename = 'songlist.json';
-	jsonStr = JSON.stringify(songlist);
-	
-	let element = document.createElement('a');
-	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
-	element.setAttribute('download', filename);
-	element.style.display = 'none';
-	document.body.appendChild(element);
-	element.click();
-	document.body.removeChild(element);
-}*/
-//-------------------------- END exporting json functions -------------------------------
-
 function exportList(name, arr) {
 	const filename = name;
 	jsonStr = JSON.stringify(arr);
@@ -420,3 +392,18 @@ function exportList(name, arr) {
 	element.click();
 	document.body.removeChild(element);
 }
+//-------------------------- END exporting json functions -------------------------------
+
+//-------------------------- switching pages functions -------------------------------
+function goToCollection() {
+	document.getElementById('collectionPage').classList.remove("hidden");
+	document.getElementById('pairPage').classList.add("hidden");
+}
+function goToPairs() {
+	document.getElementById('collectionPage').classList.add("hidden");
+	document.getElementById('pairPage').classList.remove("hidden");
+}
+//-------------------------- END switching pages functions -------------------------------
+
+console.log("full js loaded");
+

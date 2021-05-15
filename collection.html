@@ -2,130 +2,127 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="style.css"></link>
-		<title>Song Pairs</title> 
-		<script type="text/javascript"
-			src="songlist.json"/></script>
+		<title>Song Pairs - My collection</title> 
 		<script type="text/javascript"
 			src="script.js"></script>
 	</head>
 	<body onload="init()">
 	
-		<button id="collectionPage" onclick="goToCollection()">Collection</button>
-		<button id="pairPage" onclick="goToPair()">Add pairs</button>
-	
-		<div id="loader">
-			<p id="notifier">Load JSON song list first.</p>
-			<h3 id="loaderTitle">Upload below</h3>
-			<label for="jsonimport">Song list:</label>
-			<input type="file" id="jsonimport" name="jsonimport" accept=".json"></input>
-			<button id="exportPairListBtn" onclick="exportList('pairlist.json', pairlist)">Export pair list</button>
-			<button id="clearPairListBtn" onclick="clearPairList()">Clear pair list</button>
-		</div>
+		<button id="collectionBtn" onclick="goToCollection()">Collection</button>
+		<button id="pairBtn" onclick="goToPairs()">Add pairs</button>
 		
-		
-		
-		
-		<div id="submitter">
-			<h3 id="submitterTitle">Submit below</h3>
-			<div class="autocomplete" class="mainPage" style="width:300px;">
-				<input type="text"
-					id="s1"
-					name="s1"
-					placeholder="song 1"
-					autocomplete="off">
-				</input>
+		<div id="pairPage">
+			<div id="loader">
+				<p id="notifier">Load JSON song list first.</p>
+				<h3 id="loaderTitle">Upload below</h3>
+				<label for="jsonimport">Song list:</label>
+				<input type="file" id="jsonimport" name="jsonimport" accept=".json"></input>
+				<button id="exportPairListBtn" onclick="exportList('pairlist.json', pairlist)">Export pair list</button>
+				<button id="clearPairListBtn" onclick="clearPairList()">Clear pair list</button>
 			</div>
-
-			<button id="way"onclick="cycleButtonIcon()">---></button>
 			
-			<div class="autocomplete" style="width:300px;">
-				<input type="text"
-					id="s2"
-					name="s2"
-					placeholder="song 2"
-					autocomplete="off">
-				</input>
-			</div>
-			<button onclick="submitSongs()">Submit pair</button>
-		</div>
+			
+			<div id="submitter">
+				<h3 id="submitterTitle">Submit below</h3>
+				<div class="autocomplete" class="mainPage" style="width:300px;">
+					<input type="text"
+						id="s1"
+						name="s1"
+						placeholder="song 1"
+						autocomplete="off">
+					</input>
+				</div>
 
-		<button id="addNewSongBtn" onclick="openNewSongPopup()">Add new song</button>
-		<button id="exportSongListBtn" onclick="exportList('songlist.json', songlist)">Export song list</button>
-		
-		<!-- The Modal -->
-		<div id="addNewSongModal" class="modal">
-			<!-- Modal content -->
-			<div class="modal-content clearfix">
-				<span class="close" onclick="closeNewSongPopup()">&times;</span>
+				<button id="way"onclick="cycleButtonIcon()">---></button>
 				
-				<h3 id="modalHeading">Add a new song to the database</h3>
-				
-				<label for="modalTitle">Title</label>
-				<input type="text" id="modalTitle"></input>
-				
-				<label for="modalArtist">Artist</label>
-				<input type="text" id="modalArtist"></input>
-				
-				<label for="modalBPM">BPM</label>
-				<input type="text" id="modalBPM"></input>
-				
-				<label for="modalCamelot">Camelot key</label>
-				<input type="text" id="modalCamelot"></input>
-				
-				<label for="modalKey">Musical key (sharp notation)</label>
-				<input type="text" id="modalKey"></input>
-				
-				<button id="saveNewSongBtn" onclick="saveNewSong()">Save!</button>
+				<div class="autocomplete" style="width:300px;">
+					<input type="text"
+						id="s2"
+						name="s2"
+						placeholder="song 2"
+						autocomplete="off">
+					</input>
+				</div>
+				<button onclick="submitSongs()">Submit pair</button>
+			</div>
+
+			<button id="addNewSongBtn" onclick="openNewSongPopup()">Add new song</button>
+			<button id="exportSongListBtn" onclick="exportList('songlist.json', songlist)">Export song list</button>
+			
+			<!-- The Modal -->
+			<div id="addNewSongModal" class="modal">
+				<!-- Modal content -->
+				<div class="modal-content clearfix">
+					<span class="close" onclick="closeNewSongPopup()">&times;</span>
+					
+					<h3 id="modalHeading">Add a new song to the database</h3>
+					
+					<label for="modalTitle">Title</label>
+					<input type="text" id="modalTitle"></input>
+					
+					<label for="modalArtist">Artist</label>
+					<input type="text" id="modalArtist"></input>
+					
+					<label for="modalBPM">BPM</label>
+					<input type="text" id="modalBPM"></input>
+					
+					<label for="modalCamelot">Camelot key</label>
+					<input type="text" id="modalCamelot"></input>
+					
+					<label for="modalKey">Musical key (sharp notation)</label>
+					<input type="text" id="modalKey"></input>
+					
+					<button id="saveNewSongBtn" onclick="saveNewSong()">Save!</button>
+				</div>
 			</div>
 		</div>
 
 		
 		<p> </p>
 		
-		
-		<div id="searcher">
-			<h3 id="searchTitle">Search database</h3>
-			<div class="autocomplete" style="width:300px;">
-				<input type="text"
-					autocomplete="off"
-					id="searchField"
-					name="searchField"
-					placeholder="Type to search your collection"
-					></input>
-			</div>
-			<div>
-				<label for="s1">Search by:</label>
-				<input type="radio" id="radioBoth" name="searchRadio" value="Artist and Title">
-				<label for="radioBoth">Artist and Title</label>
-				<input type="radio" id="radioArtist" name="searchRadio" value="Artist only">
-				<label for="radioArtist">Artist only</label>
-				<input type="radio" id="radioTitle" name="searchRadio" value="Title only" checked>
-				<label for="radioTitle">Title only</label>
-			</div>
-		</div>
-		
-		
-		
-		<div class="float-container">
-			<div class="float-child">
-				<h3 id="searchResultsTitle">My music collection</h3>
-				<div id="searchResults">
-					<!--paragraphs appear here-->
+		<div id="collectionPage">
+			<div id="searcher">
+				<h3 id="searchTitle">Search database</h3>
+				<div class="autocomplete" style="width:300px;">
+					<input type="text"
+						autocomplete="off"
+						id="searchField"
+						name="searchField"
+						placeholder="Type to search your collection"
+						></input>
+				</div>
+				<div>
+					<label for="s1">Search by:</label>
+					<input type="radio" id="radioBoth" name="searchRadio" value="Artist and Title">
+					<label for="radioBoth">Artist and Title</label>
+					<input type="radio" id="radioArtist" name="searchRadio" value="Artist only">
+					<label for="radioArtist">Artist only</label>
+					<input type="radio" id="radioTitle" name="searchRadio" value="Title only" checked>
+					<label for="radioTitle">Title only</label>
 				</div>
 			</div>
 			
-			<div class="float-child">
-				<h3 id="compatibleTitle">Compatible songs</h3>
-				<p id="theFollowing"></p>
-				<div id="compatible">
-					<!--paragraphs appear here-->
+			<div class="float-container">
+				<div class="float-child">
+					<h3 id="searchResultsTitle">My music collection</h3>
+					<div id="searchResults">
+						<!--paragraphs appear here-->
+					</div>
 				</div>
-			</div>
-			
-			<div class="float-child">
-				<h3 id="showcaseTitle">Recent additions</h3>
-				<div id="showcase">
-					<!--paragraphs appear here-->
+				
+				<div class="float-child">
+					<h3 id="compatibleTitle">Compatible songs</h3>
+					<p id="theFollowing"></p>
+					<div id="compatible">
+						<!--paragraphs appear here-->
+					</div>
+				</div>
+				
+				<div class="float-child">
+					<h3 id="showcaseTitle">Recent additions</h3>
+					<div id="showcase">
+						<!--paragraphs appear here-->
+					</div>
 				</div>
 			</div>
 		</div>
