@@ -7,10 +7,12 @@
 			src="script.js"></script>
 	</head>
 	<body onload="init()">
-	
-		<button class="" id="collectionBtn" onclick='goTo("collectionPage")'>Collection</button>
-		<button id="pairBtn" onclick='goTo("pairPage")'>Add pairs</button>
-		<button id="settingsBtn" onclick='goTo("settingsPage")'>Settings</button>
+		
+		<div class="navbar">
+			<button id="collectionBtn" onclick='goTo("collectionPage")'>Collection</button>
+			<button id="pairBtn" onclick='goTo("pairPage")'>Add pairs</button>
+			<button id="settingsBtn" onclick='goTo("settingsPage")'>Settings</button>
+		</div>
 		
 		<p id="notifier">Load JSON song list first in settings.</p>
 		
@@ -49,21 +51,13 @@
 
 	
 			<div id="collectionPage">
+			
 				<div id="searcher">
 					<h3 id="searchTitle">My music collection</h3>
 					<div id="searchCollectionDiv">
 						<input type="text" autocomplete="off" id="searchField" name="searchField" placeholder="Type to search your collection"></input>
 						<button id="addNewSongBtn" onclick="openNewSongPopup()">+</button>
 					</div>
-					<!--<div id="searchByDiv">
-						<label for="s1">Search by:</label>
-						<input type="radio" id="radioBoth" name="searchRadio" value="Artist and Title">
-						<label for="radioBoth">Artist and Title</label>
-						<input type="radio" id="radioArtist" name="searchRadio" value="Artist only">
-						<label for="radioArtist">Artist only</label>
-						<input type="radio" id="radioTitle" name="searchRadio" value="Title only" checked>
-						<label for="radioTitle">Title only</label>
-					</div>-->
 					<div id="sortSearchResultsByDiv">
 						<label for="sortSearchResultsBySelect">Sort by:</label>
 						<select id='sortSearchResultsBySelect' onchange="test()">
@@ -146,3 +140,13 @@
 
 	</body>
 </html>
+
+					<!--<div id="searchByDiv">
+						<label for="s1">Search by:</label>
+						<input type="radio" id="radioBoth" name="searchRadio" value="Artist and Title">
+						<label for="radioBoth">Artist and Title</label>
+						<input type="radio" id="radioArtist" name="searchRadio" value="Artist only">
+						<label for="radioArtist">Artist only</label>
+						<input type="radio" id="radioTitle" name="searchRadio" value="Title only" checked>
+						<label for="radioTitle">Title only</label>
+					</div>-->

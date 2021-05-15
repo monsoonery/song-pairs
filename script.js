@@ -149,10 +149,10 @@ function writePair(x, y) {
 	console.log(i);
 	console.log(pairlist[i]);
 	//add track ids to recent additions
-	var tempPar = document.createElement("p");
+	/*var tempPar = document.createElement("p");
     var tempText = document.createTextNode(pairlist[i]);
     document.getElementById("showcase").appendChild(tempPar);
-    tempPar.appendChild(tempText);
+    tempPar.appendChild(tempText);*/
 	//add song names to recent additions
 	var par = document.createElement("p");
     var text = document.createTextNode(x + " + " + y);
@@ -337,17 +337,6 @@ function autocomplete(inp, arr) {
 }
 //-------------------------- END yoinked autocomplete functions -------------------------------
 
-//-------------------------- clear pairlist functions -------------------------------
-function clearPairList() {
-	if (confirm('Are you sure you want to clear the pairlist?')) {
-		localStorage.setItem('pairlist', JSON.stringify([]));
-		console.log('Pair list clearing complete.');
-	} else {
-		console.log('Pair list clearing cancelled.');
-	}
-}
-//-------------------------- END clear pairlist functions -------------------------------
-
 //-------------------------- modal box functions -------------------------------
 function openNewSongPopup() {
 	document.getElementById('addNewSongModal').style.display = "block";
@@ -382,7 +371,7 @@ function saveNewSong() {
 //-------------------------- END modal box functions -------------------------------
 
 
-//-------------------------- exporting json functions -------------------------------
+//-------------------------- exporting/clearing json functions -------------------------------
 function exportList(name, arr) {
 	const filename = name;
 	jsonStr = JSON.stringify(arr);
@@ -395,12 +384,29 @@ function exportList(name, arr) {
 	element.click();
 	document.body.removeChild(element);
 }
-//-------------------------- END exporting json functions -------------------------------
+
+function clearPairList() {
+	if (confirm('Are you sure you want to clear the pairlist?')) {
+		localStorage.setItem('pairlist', JSON.stringify([]));
+		console.log('Pair list clearing complete.');
+	} else {
+		console.log('Pair list clearing cancelled.');
+	}
+}
+//-------------------------- END exporting/clearing json functions -------------------------------
 
 //-------------------------- switching pages functions -------------------------------
 function goTo(p) {
 	[].forEach.call(document.querySelectorAll("#pageContainer>div"), el => el.classList.add("hidden"));
 	document.getElementById(p).classList.remove("hidden");
+	[].forEach.call(document.querySelectorAll(".navbar>button"), el => el.classList.remove("active"));
+	if (p == 'collectionPage') {
+		document.getElementById('collectionBtn').classList.add("active");
+	} else if (p == 'pairPage') {
+		document.getElementById('pairBtn').classList.add("active");
+	} else if (p == 'settingsPage') {
+		document.getElementById('settingsBtn').classList.add("active");
+	}
 }
 //-------------------------- END switching pages functions -------------------------------
 

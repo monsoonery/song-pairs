@@ -5,6 +5,9 @@
 
 body {
   font: 16px Arial;  
+  background-color: #ffffff;
+  margin: 0px;
+  margin-top:0.5%;
 }
 
 h3 {
@@ -14,8 +17,8 @@ h3 {
 input[type=text] {
   border-radius: 3px;
   border: 1px solid transparent;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  /*margin-top: 5px;
+  margin-bottom: 5px;*/
   padding: 10px;
   font-size: 16px;
   background-color: #f1f1f1;
@@ -25,8 +28,8 @@ input[type=text] {
 button {
   border: 1px solid;
   border-radius: 3px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  /*margin-top: 5px;
+  margin-bottom: 5px;*/
   padding: 10px;
   font-size: 14px;
   background-color: #f1f1f1;
@@ -34,7 +37,7 @@ button {
 
 button:hover {
   cursor: pointer;
-  background-color: #cccccc;
+  /*background-color: #cccccc;*/
 }
 
 /***************************** NAVIGATION *****************************/
@@ -42,15 +45,55 @@ button:hover {
 	display: none; 
 }
 
-collectionBtn:hover,
-pageBtn:hover,
-settingsBtn:hover {
+
+.navbar {
+    display: flex;
+	margin: 0px;
+	padding: 0px;
+}
+
+.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.navbar button {
+	border: 0px solid;
+	border-top-right-radius: 25px;
+	border-top-left-radius: 25px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+	margin: 0px;
+	width: 100%;
+}
+
+.navbar button:hover:not(.active) {
     background: #aaa;
 }
 
+
+
 /***************************** collection page *****************************/
 #searchCollectionDiv {
-    display:inline-block;
+    display: flex;
+}
+
+#searchCollectionDiv input {
+    width:100%;
+}
+
+#searchCollectionDiv button {
+    margin-left: 5px;
+}
+
+select {
+  border: 1px solid;
+  border-radius: 3px;
+  /*margin-top: 5px;
+  margin-bottom: 5px;*/
+  padding: 10px;
+  font-size: 14px;
+  background-color: #f1f1f1;
 }
 
 /* The Modal (background) */
@@ -205,3 +248,4 @@ settingsBtn:hover {
 .closebtn:hover {
   color: black;
 }
+
