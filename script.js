@@ -9,7 +9,7 @@
 
 var songlist; 
 var pairlist;													//json
-pairlist = JSON.parse(localStorage.getItem('pairlist'));	//[[x.y],[x,y], ...] trackid pairs
+//pairlist = JSON.parse(localStorage.getItem('pairlist'));	//[[x.y],[x,y], ...] trackid pairs
 var richting = 1; 												//one-way or two-way compatible
 var song1;
 var song2;
@@ -49,19 +49,18 @@ request.onreadystatechange = function() {
 }
 
 //import pairlist from github
-/*var request = new XMLHttpRequest();
-request.open("GET", "https://monsoonery.github.io/song-pairs/pairlist.json", true);
-request.send(null);
-request.onreadystatechange = function() {
-  if ( request.readyState === 4 && request.status === 200 ) {
-    songlist = JSON.parse(request.responseText);
-	displaySongs(searchSongs(""));
+var request2 = new XMLHttpRequest();
+request2.open("GET", "https://monsoonery.github.io/song-pairs/pairlist.json", true);
+request2.send(null);
+request2.onreadystatechange = function() {
+  if (request2.readyState === 4 && request.status === 200 ) {
+    pairlist = JSON.parse(request2.responseText);
 	document.getElementById('notifier').innerHTML = "pairlist.json loaded from server successfully!";
 	console.log('pairlist server: ' + pairlist);
   } else {
 	document.getElementById('notifier').innerHTML = "Failed to upload pairlist.json";
   }
-}*/
+}
 
 //-------------------------- local json import functions --------------------------
 function loadJson() {
