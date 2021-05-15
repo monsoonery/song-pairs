@@ -7,100 +7,109 @@
 			src="script.js"></script>
 	</head>
 	<body onload="init()">
-		
-		<div class="navbar">
-			<button id="collectionBtn" onclick='goTo("collectionPage")'>Collection</button>
-			<button id="pairBtn" onclick='goTo("pairPage")'>Add pairs</button>
-			<button id="settingsBtn" onclick='goTo("settingsPage")'>Settings</button>
+					<!--<p id="notifier">Load JSON song list first in settings.</p>-->
+
+		<div id="alertContainer" class="alertContainer">
+			<!--<div class="alert">
+			  <span class="closebtn">×</span>  
+			  <strong>Alert.</strong> Load JSON first.
+			</div>-->
 		</div>
 		
-		<p id="notifier">Load JSON song list first in settings.</p>
-		
-		<div id="pageContainer">
-			<div id="pairPage">
-			
-				<div id="submitter">
-					<h3 id="submitterTitle">Submit below</h3>
-					<div class="autocomplete song-field">
-						<input type="text"
-							id="s1"
-							name="s1"
-							placeholder="song 1"
-							autocomplete="off">
-						</input>
-					</div>
-					<button id="way"onclick="cycleButtonIcon()">---></button>
-					<div class="autocomplete song-field"">
-						<input type="text"
-							id="s2"
-							name="s2"
-							placeholder="song 2"
-							autocomplete="off">
-						</input>
-					</div>
-					<button onclick="submitSongs()">Submit pair</button>
-				</div>
-				
-				<div class="float-child">
-					<h3 id="showcaseTitle">My pairs</h3>
-					<div id="showcase">
-						<!--paragraphs appear here-->
-					</div>
-				</div>
+		<div class="all">
+			<div class="navbar">
+				<button id="collectionBtn" onclick='goTo("collectionPage")'>Collection</button>
+				<button id="pairBtn" onclick='goTo("pairPage")'>Add pairs</button>
+				<button id="settingsBtn" onclick='goTo("settingsPage")'>Settings</button>
 			</div>
+			
+			
+			<div class="pageContainer" id="pageContainer">
+				<div id="pairPage">
+				
+					<div id="submitter">
+						<h3 id="submitterTitle">Submit below</h3>
+						<div class="autocomplete song-field">
+							<input type="text"
+								id="s1"
+								name="s1"
+								placeholder="song 1"
+								autocomplete="off">
+							</input>
+						</div>
+						<button id="way"onclick="cycleButtonIcon()">---></button>
+						<div class="autocomplete song-field"">
+							<input type="text"
+								id="s2"
+								name="s2"
+								placeholder="song 2"
+								autocomplete="off">
+							</input>
+						</div>
+						<button onclick="submitSongs()">Submit pair</button>
+					</div>
+					
+					<div class="float-child">
+						<h3 id="showcaseTitle">My pairs</h3>
+						<div id="showcase">
+							<!--paragraphs appear here-->
+						</div>
+					</div>
+				</div>
 
-	
-			<div id="collectionPage">
-			
-				<div id="searcher">
-					<h3 id="searchTitle">My music collection</h3>
-					<div id="searchCollectionDiv">
-						<input type="text" autocomplete="off" id="searchField" name="searchField" placeholder="Type to search your collection"></input>
-						<button id="addNewSongBtn" onclick="openNewSongPopup()">+</button>
-					</div>
-					<div id="sortSearchResultsByDiv">
-						<label for="sortSearchResultsBySelect">Sort by:</label>
-						<select id='sortSearchResultsBySelect' onchange="test()">
-							<option value="artist">Artist</option>
-							<option value="title">Title</option>
-							<option selected='selected' value="trackID">Track ID</option>
-						</select>
-						<button id='sortSearchResultsByBtn' onclick="change()">↓</button>
+		
+				<div id="collectionPage">
+				
+					<div id="searcher">
+						<h3 id="searchTitle">My music collection</h3>
+						<div id="searchCollectionDiv">
+							<input type="text" autocomplete="off" id="searchField" name="searchField" placeholder="Type to search your collection"></input>
+							<button id="addNewSongBtn" onclick="openNewSongPopup()">+</button>
+						</div>
+						<div id="sortSearchResultsByDiv">
+							<label for="sortSearchResultsBySelect">Sort by:</label>
+							<select id='sortSearchResultsBySelect' onchange="test()">
+								<option value="artist">Artist</option>
+								<option value="title">Title</option>
+								<option selected='selected' value="trackID">Track ID</option>
+							</select>
+							<button id='sortSearchResultsByBtn' onclick="change()">↓</button>
+						</div>
+						
 					</div>
 					
+					<div class="float-container">
+						<div class="float-child">
+							<!--<h3 id="searchResultsTitle">My music collection</h3>-->
+							<div id="searchResults">
+								<!--paragraphs appear here-->
+							</div>
+						</div>
+						
+						<div class="float-child">
+							<!--<h3 id="compatibleTitle">Compatible songs</h3>-->
+							<p id="theFollowing">Select a song from the list on the left</p>
+							<div id="compatible">
+								<!--paragraphs appear here-->
+							</div>
+						</div>
+					</div>
 				</div>
 				
-				<div class="float-container">
-					<div class="float-child">
-						<!--<h3 id="searchResultsTitle">My music collection</h3>-->
-						<div id="searchResults">
-							<!--paragraphs appear here-->
+				<div id="settingsPage">
+					<div id="loader">
+						<h3 id="loaderTitle">Upload local JSON files here</h3>
+						<div>
+							<label for="jsonimport">Song list:</label>
+							<input type="file" id="jsonimport" name="jsonimport" accept=".json"></input>
+							<button id="exportSongListBtn" onclick="exportList('songlist.json', songlist)">Export song list</button>
+							<button id="clearPairListBtn" onclick="clearPairList()">Clear pair list</button>
 						</div>
-					</div>
-					
-					<div class="float-child">
-						<!--<h3 id="compatibleTitle">Compatible songs</h3>-->
-						<p id="theFollowing"></p>
-						<div id="compatible">
-							<!--paragraphs appear here-->
+						<div>
+							<label for="jsonimport2">Pair list:</label>
+							<input type="file" id="jsonimport2" name="jsonimport2" accept=".json"></input>
+							<button id="exportPairListBtn" onclick="exportList('pairlist.json', pairlist)">Export pair list</button>	
 						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div id="settingsPage">
-				<div id="loader">
-					<h3 id="loaderTitle">Upload local JSON files here</h3>
-					<div>
-						<label for="jsonimport">Song list:</label>
-						<input type="file" id="jsonimport" name="jsonimport" accept=".json"></input>
-						<button id="exportSongListBtn" onclick="exportList('songlist.json', songlist)">Export song list</button>
-						<button id="clearPairListBtn" onclick="clearPairList()">Clear pair list</button>
-					</div>
-					<div>
-						<label for="jsonimport2">Pair list:</label>
-						<input type="file" id="jsonimport2" name="jsonimport2" accept=".json"></input>
-						<button id="exportPairListBtn" onclick="exportList('pairlist.json', pairlist)">Export pair list</button>	
 					</div>
 				</div>
 			</div>
@@ -132,12 +141,6 @@
 				<button id="saveNewSongBtn" onclick="saveNewSong()">Save!</button>
 			</div>
 		</div>
-		
-		<div class="alert" style="display:none;">
-			<span class="closeBtn" onclick="this.parentElement.style.display='none';">&times;</span>
-			This is an alert box.
-		</div>
-
 	</body>
 </html>
 

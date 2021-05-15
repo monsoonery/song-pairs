@@ -33,37 +33,72 @@ function init() {
 		}
 	}
 	
+	goTo('collectionPage');
+	
 	console.log("init complete");
 }
 
 //import songlist from github
-var request = new XMLHttpRequest();
-request.open("GET", "https://monsoonery.github.io/song-pairs/songlist.json", true);
+/*var request = new XMLHttpRequest();
+request.open("GET", "https://monsoonery.github.io/song-pairs/songlisst.json", true);
 request.send(null);
 request.onreadystatechange = function() {
   if (request.readyState === 4 && request.status === 200 ) {
     songlist = JSON.parse(request.responseText);
 	displaySongs(searchSongs(""));
-	document.getElementById('notifier').innerHTML = "songlist.json loaded from server successfully!";
+	//document.getElementById('notifier').innerHTML = "songlist.json loaded from server successfully!";
+	sendAlert("songlist.json loaded from server successfully!", "alert success");
 	console.log('songlist server: ' + songlist);
   } else {
-	document.getElementById('notifier').innerHTML = "Failed to upload songlist.json";
+	sendAlert("Failed to load songlist.json", "alert");
+	//document.getElementById('notifier').innerHTML = "Failed to load songlist.json";
   }
+}*/
+
+var requestSong = new XMLHttpRequest();
+requestSong.open("GET", "https://monsoonery.github.io/song-pairs/songlist.json", true);
+requestSong.send(null);	
+requestSong.onreadystatechange = function() {
+	if (this.readyState == 4) {
+		if (requestSong.status === 200) {
+			songlist = JSON.parse(requestSong.responseText);
+			displaySongs(searchSongs(""));
+			sendAlert("songlist.json loaded from server successfully!", "alert success");
+		} else {
+			sendAlert("Failed to load songlist.json (Error " + requestSong.status + ")", "alert");
+		}
+    }
+}
+
+var requestPair = new XMLHttpRequest();
+requestPair.open("GET", "https://monsoonery.github.io/song-pairs/pairlist.json", true);
+requestPair.send(null);	
+requestPair.onreadystatechange = function() {
+	if (this.readyState == 4) {
+		if (requestPair.status === 200) {
+			pairlist = JSON.parse(requestPair.responseText);
+			sendAlert("pairlist.json loaded from server successfully!", "alert success");
+		} else {
+			sendAlert("Failed to load pairlist.json (Error " + requestPair.status + ")", "alert");
+		}
+    }
 }
 
 //import pairlist from github
-var request2 = new XMLHttpRequest();
+/*var request2 = new XMLHttpRequest();
 request2.open("GET", "https://monsoonery.github.io/song-pairs/pairlist.json", true);
 request2.send(null);
 request2.onreadystatechange = function() {
   if (request2.readyState === 4 && request.status === 200 ) {
     pairlist = JSON.parse(request2.responseText);
-	document.getElementById('notifier').innerHTML = "pairlist.json loaded from server successfully!";
+	//document.getElementById('notifier').innerHTML = "pairlist.json loaded from server successfully!";
+	sendAlert("pairlist.json loaded from server successfully!", "alert success");
 	console.log('pairlist server: ' + pairlist);
   } else {
-	document.getElementById('notifier').innerHTML = "Failed to upload pairlist.json";
+	sendAlert("Failed to load pairlist.json", "alert");
+	//document.getElementById('notifier').innerHTML = "Failed to upload pairlist.json";
   }
-}
+}*/
 
 //-------------------------- local json import functions --------------------------
 function loadJson() {
@@ -112,7 +147,7 @@ function submitSongs() {
 		
 		if (!found1 || !found2) {
 			//if one of the two songs wasn't found, warn the user
-			alert("not found");
+			sendAlert("One or both songs entered do not exist in the song database", "alert warning");
 			return;
 		} else {
 			//save new pair using track ids
@@ -130,7 +165,7 @@ function submitSongs() {
 		}
 
 		//confirmation for user
-		alert(song1 + " and " + song2 + " added!");
+		sendAlert((song1 + " and " + song2 + " added!"), "alert success");
        
         //clear text input fields
         document.getElementById('s1').value = '';
@@ -138,7 +173,7 @@ function submitSongs() {
               
     } else {
 		//if a text field was left empty, warn the user
-        alert("wrong input");
+		sendAlert("One or both text fields are empty", "alert warning");
     }	
            
 }
@@ -359,6 +394,8 @@ function saveNewSong() {
 	songlist.push(tempObj);
 	console.log(songlist);
 	
+	sendAlert("Added " + artist + " - " + title + " to your song collection!", "alert success");
+	
 	document.getElementById('addNewSongModal').style.display = "none";
 	
 	document.getElementById("modalTitle").innerHTML = "";
@@ -402,20 +439,62 @@ function goTo(p) {
 	[].forEach.call(document.querySelectorAll(".navbar>button"), el => el.classList.remove("active"));
 	if (p == 'collectionPage') {
 		document.getElementById('collectionBtn').classList.add("active");
+		document.getElementById('pageContainer').style.backgroundColor = "#4CAF50";
 	} else if (p == 'pairPage') {
 		document.getElementById('pairBtn').classList.add("active");
+		document.getElementById('pageContainer').style.backgroundColor = "#7B2A8D";
 	} else if (p == 'settingsPage') {
 		document.getElementById('settingsBtn').classList.add("active");
+		document.getElementById('pageContainer').style.backgroundColor = "#34A5D5";
 	}
 }
 //-------------------------- END switching pages functions -------------------------------
 
+//-------------------------- sort by functions -------------------------------
 var sortByVal;
-
 function test (){
 	sortByVal = document.getElementById('sortSearchResultsBySelect').value;
 	console.log(sortByVal);
 }
+//-------------------------- END sort by functions -------------------------------
 
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function sendAlert(t, c) {
+	//make notif box slowly fade in
+	var div = document.createElement("div");
+	div.className = c;
+	setTimeout(function(){div.style.opacity = 1}, 0);
+	
+	var span = document.createElement("span");
+	var cross = document.createTextNode("×");
+	span.appendChild(cross);
+	span.className = "closebtn";
+	
+	var p = document.createElement("p");
+	var text = document.createTextNode(t);
+	p.appendChild(text);
+	div.appendChild(p);
+	div.appendChild(span);
+	document.getElementById('alertContainer').appendChild(div);
+	
+	//auto-dismiss after 3 seconds
+	setTimeout(function(){ 
+		div.style.opacity = "0";
+		setTimeout(function(){ div.style.display = "none"; }, 300);		
+		}, 3000);
+	
+	//dismiss when clicking on x
+	span.onclick = function(){
+		var div = this.parentElement;
+		div.style.opacity = "0";
+		setTimeout(function(){ div.style.display = "none"; }, 300);
+	}
+}
+
+
+//sendAlert("cog", "alert success");
 console.log("full js loaded");
 

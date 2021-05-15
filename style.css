@@ -3,11 +3,31 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
+  /*display: flex;
+  flex-flow: column;*/
+  height: 100%;
+  margin: 0;
   font: 16px Arial;  
   background-color: #ffffff;
   margin: 0px;
-  margin-top:0.5%;
+}
+
+.all {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.all .navbar {
+  flex: 0 1 auto;
+  margin-top: 0.5%;
+}
+
+
+.all .pageContainer {
+  flex: 1 1 auto;
+  padding:10px;
 }
 
 h3 {
@@ -41,10 +61,24 @@ button:hover {
 }
 
 /***************************** NAVIGATION *****************************/
-.hidden { 
-	display: none; 
+#collectionPage {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 }
 
+#searcher {
+  flex: 0 1 auto;
+}
+
+.float-container {
+  flex: 1 0 auto;
+}
+
+.float-child {
+	display: block;
+  overflow:auto;
+}
 
 .navbar {
     display: flex;
@@ -52,10 +86,25 @@ button:hover {
 	padding: 0px;
 }
 
-.active {
+#collectionBtn.active  {
   background-color: #4CAF50;
   color: white;
 }
+
+#pairBtn.active {
+  background-color: #7B2A8D;
+  color: white;
+}
+
+#settingsBtn.active  {
+  background-color: #34A5D5;
+  color: white;
+}
+
+.hidden { 
+	display: none; 
+}
+
 
 .navbar button {
 	border: 0px solid;
@@ -70,8 +119,6 @@ button:hover {
 .navbar button:hover:not(.active) {
     background: #aaa;
 }
-
-
 
 /***************************** collection page *****************************/
 #searchCollectionDiv {
@@ -160,10 +207,16 @@ select {
 }
 
 .float-child {
-	flex: 1;
-    border: 2px solid yellow;
+	flex: 1 0;
+	height: 100%;
+    border: 2px solid green;
 	margin: 2px;
+	overflow: auto;
 }  
+
+.float-child #searchResults {
+	height: 10%;
+}
 
 .float-child h3 {
 	background-color: #ffffff;
@@ -178,6 +231,7 @@ select {
 }
 
 /***************************** pairs page *****************************/
+
 .song-field {
 	width: 40%;
 }
@@ -223,28 +277,54 @@ select {
 
 
 
-//***************************** ALERT BOX *****************************/
-/* The alert message box */
+/***************************** ALERT BOX *****************************/
+.alertContainer {
+  position: fixed; 
+  right: 0;
+  bottom: 0;
+  z-index: 1; /* Sit on top */
+  width: 40%;
+  margin: 0px;
+}
+
 .alert {
-  padding: 20px;
-  background-color: #f44336; /* Red */
+	display: flex;
+	justify-content: space-between;
+  padding: 15px;
+  margin: 0px;
+  background-color: #f44336;
   color: white;
-  margin-bottom: 15px;
-}
-
-/* The close button */
-.closebtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
+  opacity: 0;
   transition: 0.3s;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
-/* When moving the mouse over the close button */
+
+.alert.success {
+	background-color: #04AA6D;
+}
+.alert.info {
+	background-color: #2196F3;
+}
+.alert.warning {
+	background-color: #ff9800;
+}
+
+.alert p {
+	margin: 0px;
+}
+
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
 .closebtn:hover {
   color: black;
 }
