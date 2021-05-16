@@ -6,7 +6,8 @@
 //document.getElementById("s2").oninput = handleInput; 
 //autocomplete(document.getElementById("compatible"));
 //autocomplete(document.getElementById("searchField"));
-
+//console.log('pairlist local: ' + localStorage.getItem('pairlist'));
+	
 var songlist; 
 var pairlist;													//json
 //pairlist = JSON.parse(localStorage.getItem('pairlist'));	//[[x.y],[x,y], ...] trackid pairs
@@ -16,22 +17,25 @@ var song2;
 
 
 function init() {
-	goTo('collectionPage');
-	// When the user clicks anywhere outside of the modal, close it
-
+	//local json importers
 	document.getElementById("jsonimport").addEventListener("change", loadJson);
+	document.getElementById("jsonimport2").addEventListener("change", loadJson2);
+	
+	//song search functionality
 	document.getElementById("searchField").oninput = handleInput; 
 
+	//autocomplete for song 1 and song 2 box
 	autocomplete(document.getElementById("s1"));
 	autocomplete(document.getElementById("s2"));
 
-	//console.log('pairlist local: ' + localStorage.getItem('pairlist'));
+	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
 		if (event.target == document.getElementById('addNewSongModal')) {
 		document.getElementById('addNewSongModal').style.display = "none";
 		}
 	}
 	
+	//resize search results box and pairs box
 	window.onresize = function() {
 		var sr = document.getElementById("searchResults");
 		var cccc = document.getElementsByClassName('navbar')[0].getBoundingClientRect().height;
@@ -48,30 +52,14 @@ function init() {
 		console.log(cccc);
 		console.log(ssr);*/
 	};
-	window.onresize();
-	
+	//show this tab when loading site
 	goTo('collectionPage');
 	
 	console.log("init complete");
 }
 
-//import songlist from github
-/*var request = new XMLHttpRequest();
-request.open("GET", "https://monsoonery.github.io/song-pairs/songlisst.json", true);
-request.send(null);
-request.onreadystatechange = function() {
-  if (request.readyState === 4 && request.status === 200 ) {
-    songlist = JSON.parse(request.responseText);
-	displaySongs(searchSongs(""));
-	//document.getElementById('notifier').innerHTML = "songlist.json loaded from server successfully!";
-	sendAlert("songlist.json loaded from server successfully!", "alert success");
-	console.log('songlist server: ' + songlist);
-  } else {
-	sendAlert("Failed to load songlist.json", "alert");
-	//document.getElementById('notifier').innerHTML = "Failed to load songlist.json";
-  }
-}*/
 
+//-------------------------- server json import functions --------------------------
 var requestSong = new XMLHttpRequest();
 requestSong.open("GET", "https://monsoonery.github.io/song-pairs/songlist.json", true);
 requestSong.send(null);	
@@ -101,21 +89,7 @@ requestPair.onreadystatechange = function() {
     }
 }
 
-//import pairlist from github
-/*var request2 = new XMLHttpRequest();
-request2.open("GET", "https://monsoonery.github.io/song-pairs/pairlist.json", true);
-request2.send(null);
-request2.onreadystatechange = function() {
-  if (request2.readyState === 4 && request.status === 200 ) {
-    pairlist = JSON.parse(request2.responseText);
-	//document.getElementById('notifier').innerHTML = "pairlist.json loaded from server successfully!";
-	sendAlert("pairlist.json loaded from server successfully!", "alert success");
-	console.log('pairlist server: ' + pairlist);
-  } else {
-	sendAlert("Failed to load pairlist.json", "alert");
-	//document.getElementById('notifier').innerHTML = "Failed to upload pairlist.json";
-  }
-}*/
+//-------------------------- END server json import functions --------------------------
 
 //-------------------------- local json import functions --------------------------
 function loadJson() {
@@ -124,13 +98,24 @@ function loadJson() {
     fr.onload = function() {
         songlist = JSON.parse(fr.result);
 		displaySongs(searchSongs(""));
-		document.getElementById('notifier').innerHTML = "Local JSON loaded successfully!";
+		sendAlert("Local songlist.json loaded successfully!", "alert success");
 		console.log(songlist);
 	};
-	console.log("json loaded");
+	console.log("songlist.json loaded");
 	fr.readAsText(file);
 }
 
+function loadJson2() {
+	const file = this.files[0];
+    let fr = new FileReader();
+    fr.onload = function() {
+        pairlist = JSON.parse(fr.result);
+		sendAlert("Local pairlist.json loaded successfully!", "alert success");
+		console.log(pairlist);
+	};
+	console.log("pairlist.json loaded");
+	fr.readAsText(file);
+}
 //-------------------------- END local json import functions --------------------------
 
 
@@ -227,7 +212,7 @@ function cycleButtonIcon() {
 //-------------------------- END new pair entries functions --------------------------
 
 
-//-------------------------- paragraph search functions -------------------------------	
+//-------------------------- collection search functions -------------------------------	
 function clearDiv(s) {
     document.getElementById(s).innerHTML = '';
 }	
@@ -236,33 +221,51 @@ function handleInput(e) {
 }
 function searchSongs(text) {
 	let songs = []; 
-	//songs.length = 0;
-	for (j = 0; j < songlist.length; j++) {
+		for (j = 0; j < songlist.length; j++) {
 		songs.push(songlist[j].artist + " - " + songlist[j].title);
 	}
+	
     return songs.filter(name => (" " + name.toLowerCase()).includes(" " + text.trim().toLowerCase()));
 	console.log("bruhmius momentium");
 }
 function displaySongs(a) {
     clearDiv("searchResults");
+	
+	if (chosenSortMethod() == 0) { 						//track ID A-Z
+		console.log("Sorting by artist A-Z");
+		a.sort();
+	} else if (1 == 1) {
+		a.reverse(); 					//track ID Z-A
+	} else if (chosenSortMethod() == 1) {					//artist A-Z
+		
+	} else if (1 == 1) {					//artist Z-A
+		
+	} else if (chosenSortMethod() == 2) {					//title A-Z
+	
+	} else if (1 == 1) {					//title Z-A
+	
+	}
 
     for (j = 0; j < a.length; j++) {
 		var tempPar = document.createElement("p");
 		let name = a[j];
 		var tempText = document.createTextNode(a[j]);
 		tempPar.onclick = function() {
+			// find the object (song) in songlist with the requested artist and title
 			var match = songlist.find(song => song.artist + " - " + song.title == name);
+			// get the track ID belonging to that object
 			var id = match.trackid;
 			console.log(name);
 			console.log(id);
 			console.log(match);
+			//show all songs in pairlist that work with this song
 			showPairList(id);
 		};
 		tempPar.appendChild(tempText);
 		searchResults.appendChild(tempPar);
 	}
 }
-//-------------------------- END paragraph search functions -------------------------------
+//-------------------------- END collection search functions -------------------------------
 
 //-------------------------- compatible songs display functions -------------------------------	
 var getArtistAndTitle = s => s.artist + " - " + s.title;
@@ -421,7 +424,6 @@ function saveNewSong() {
 	document.getElementById("modalCamelot").innerHTML = "";
 	document.getElementById("modalKey").innerHTML = "";
 }
-
 //-------------------------- END modal box functions -------------------------------
 
 
@@ -464,14 +466,22 @@ function goTo(p) {
 		document.getElementById('settingsBtn').classList.add("active");
 		document.getElementById('pageContainer').style.backgroundColor = "#34A5D5";
 	}
+	window.onresize();
 }
 //-------------------------- END switching pages functions -------------------------------
 
 //-------------------------- sort by functions -------------------------------
 var sortByVal;
-function test (){
+function test () {
+	console.log(document.getElementById('sortSearchResultsBySelect').selectedIndex);
+	return document.getElementById('sortSearchResultsBySelect').selectedIndex;
 	sortByVal = document.getElementById('sortSearchResultsBySelect').value;
 	console.log(sortByVal);
+}
+
+function chosenSortMethod() {
+	console.log(document.getElementById('sortSearchResultsBySelect').selectedIndex);
+	return document.getElementById('sortSearchResultsBySelect').selectedIndex;
 }
 //-------------------------- END sort by functions -------------------------------
 

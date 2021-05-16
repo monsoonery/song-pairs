@@ -99,16 +99,26 @@
 				<div id="settingsPage">
 					<div id="loader">
 						<h3 id="loaderTitle">Upload local JSON files here</h3>
-						<div>
-							<label for="jsonimport">Song list:</label>
-							<input type="file" id="jsonimport" name="jsonimport" accept=".json"></input>
-							<button id="exportSongListBtn" onclick="exportList('songlist.json', songlist)">Export song list</button>
-							<button id="clearPairListBtn" onclick="clearPairList()">Clear pair list</button>
+						<div class="jsonImportDiv">
+							<div class="jsonImportInputDiv">
+								<label for="jsonimport">Song list:</label>
+								<input type="file" id="jsonimport" name="jsonimport" accept=".json"></input>
+							</div>
+							<div class="jsonImportBtnDiv">
+								<button class="jsonImportBtn" id="exportSongListBtn" onclick="exportList('songlist.json', songlist)">Export song list</button>
+								<button class="jsonImportBtn" id="clearSongListBtn" onclick="clearSongList()">Clear song list</button>
+							</div>
+
 						</div>
-						<div>
-							<label for="jsonimport2">Pair list:</label>
-							<input type="file" id="jsonimport2" name="jsonimport2" accept=".json"></input>
-							<button id="exportPairListBtn" onclick="exportList('pairlist.json', pairlist)">Export pair list</button>	
+						<div class="jsonImportDiv">
+							<div class="jsonImportInputDiv">
+								<label for="jsonimport2">Pair list:</label>
+								<input type="file" id="jsonimport2" name="jsonimport2" accept=".json"></input>
+							</div>
+							<div class="jsonImportBtnDiv">
+								<button class="jsonImportBtn" id="exportPairListBtn" onclick="exportList('pairlist.json', pairlist)">Export pair list</button>	
+								<button class="jsonImportBtn" id="clearPairListBtn" onclick="clearPairList()">Clear pair list</button>
+							</div>
 						</div>
 					</div>
 				</div>

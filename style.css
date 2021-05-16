@@ -7,7 +7,6 @@ html, body {
   /*display: flex;
   flex-flow: column;*/
   height: 100%;
-  margin: 0;
   font: 16px Arial;  
   background-color: #ffffff;
   margin: 0px;
@@ -22,7 +21,7 @@ html, body {
 
 .all .navbar {
   flex: 0 1 auto;
-  margin-top: 5px;
+  padding-top: 5px;
 }
 
 
@@ -30,6 +29,7 @@ html, body {
   flex: 1 1 auto;
   padding:10px;
 }
+
 
 h3 {
 	margin: 0px;
@@ -285,8 +285,24 @@ select {
 
 /***************************** SETTINGS PAGE *****************************/
 
+.jsonImportDiv {
+	display: flex;
+	justify-content: space-between;
+}
 
+.jsonImportInputDiv {
+	flex: 1 0 10%;
+	
+}
 
+.jsonImportBtnDiv {
+	flex: 1 0 50%;
+	margin: 10px;
+}
+
+.jsonImportBtn {
+	width: 120px;
+}
 
 /***************************** ALERT BOX *****************************/
 .alertContainer {
@@ -299,8 +315,8 @@ select {
 }
 
 .alert {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
   padding: 15px;
   margin: 0px;
   background-color: #f44336;
