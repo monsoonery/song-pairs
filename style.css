@@ -148,7 +148,12 @@ button:hover {
 }
 
 #searchCollectionDiv button {
+	width: 40px;
     margin-left: 5px;
+}
+
+#sortSearchResultsByDiv button {
+	width: 40px;
 }
 
 select {
