@@ -109,14 +109,26 @@ button:hover {
   color: white;
 }
 
+#collectionBtn:hover:not(.active) {
+  background-color: #BFC4BF;
+}
+
 #pairBtn.active {
   background-color: #7B2A8D;
   color: white;
 }
 
+#pairBtn:hover:not(.active) {
+  background-color: #C4BFC4;
+}
+
 #settingsBtn.active  {
   background-color: #34A5D5;
   color: white;
+}
+
+#settingsBtn:hover:not(.active) {
+    background: #BFC3C4;
 }
 
 .hidden { 
@@ -125,12 +137,15 @@ button:hover {
 
 
 .navbar button {
+	font-size: 18px;
+	padding: 8px;
 	border: 0px solid;
 	border-top-right-radius: 25px;
 	border-top-left-radius: 25px;
 	border-bottom-right-radius: 0px;
 	border-bottom-left-radius: 0px;
 	margin: 0px;
+	background: #a9a9a9;
 	width: 100%;
 }
 
