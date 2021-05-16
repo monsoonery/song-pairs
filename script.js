@@ -15,7 +15,6 @@ var song1;
 var song2;
 
 
-
 function init() {
 	goTo('collectionPage');
 	// When the user clicks anywhere outside of the modal, close it
@@ -32,6 +31,24 @@ function init() {
 		document.getElementById('addNewSongModal').style.display = "none";
 		}
 	}
+	
+	window.onresize = function() {
+		var sr = document.getElementById("searchResults");
+		var cccc = document.getElementsByClassName('navbar')[0].getBoundingClientRect().height;
+		var dddd = document.getElementById('searcher').getBoundingClientRect().height;
+		var ssr = window.innerHeight - cccc - dddd - 500;
+		sr.style.height = ssr + "px";
+		
+		var sc = document.getElementById("showcase");
+		var eeee = document.getElementById('submitter').getBoundingClientRect().height;
+		var ssc = window.innerHeight - cccc - eeee - 150;
+		sc.style.height = ssc + "px";
+		
+		/*console.log("kek");
+		console.log(cccc);
+		console.log(ssr);*/
+	};
+	window.onresize();
 	
 	goTo('collectionPage');
 	
